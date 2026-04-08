@@ -68,7 +68,6 @@ class Econ__Slots(commands.Cog):
         new_bal = 0
 
         # All 3 match
-        # print(?rfinal)
         if final[0] == final[1] == final[2]:
             win = True
             multiplier = random.randint(3, 5)

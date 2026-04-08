@@ -78,7 +78,6 @@ def strip_fileexts(_filename: str):
 
     for ext in file_extensions:
         filename = filename.replace(f".{ext}", "")
-    print(filename)
     return filename
 
 class OnMessageDelete(commands.Cog):

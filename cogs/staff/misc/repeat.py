@@ -38,7 +38,11 @@ class repeat(commands.Cog):
             await channel.send(message)
             await ctx.reply("Sent message successfully!", ephemeral=True)
         else:
-            await ctx.message.delete()
+            if ctx.interaction == None:
+                await ctx.message.delete()
+            else:
+                await ctx.reply("You can only use that in staff bot commands!", ephemeral=True)
+
 
 async def setup(bot):
     await bot.add_cog(repeat(bot))

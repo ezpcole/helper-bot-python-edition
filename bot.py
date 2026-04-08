@@ -42,11 +42,11 @@ if good_to_go == True:
         case_insensitive=True
     )
 
-    # app.bot_instance = bot
+    app.bot_instance = bot
     
-    # t = threading.Thread(target=run_web)
-    # t.daemon = True
-    # t.start()
+    t = threading.Thread(target=run_web)
+    t.daemon = True
+    t.start()
 
     try:
         bot.run(token)

@@ -21,9 +21,7 @@ def usernick(ctx: Context):
     
     # 22/03/2026 - Prevent AFK status "stacking"
     if nick.find("[AFK]") >= 0:
-        # print("they has afk in nick")
         nick = nick.replace("[AFK] ", "")
-    # print(nick)
 
     # Discord's nickname character limit is 32.
     if len(nick) > 26:

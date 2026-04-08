@@ -74,7 +74,7 @@ class AFKReturn(commands.Cog):
                                     await msg.channel.send(content=f"{returnMessage}", delete_after=5)
                                     await msg.author.edit(nick=afk_user['name'], reason="They are back")
                                 except Forbidden as e:
-                                    print(f"Cannot change {msg.author.display_name}'s name")
+                                    print(f"Cannot change {msg.author.display_name}'s name - {e}")
                             
 
             # afk = files.get_filepath("afk", "json")

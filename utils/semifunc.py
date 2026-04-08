@@ -30,6 +30,12 @@ class SemiFunc():
     def update_banished(logger):
         data = Database.get_banished()
 
+        SemiFunc.banished_ids = {}
+        SemiFunc.banished_words_bypasses = {}
+        SemiFunc.banished_flagmsg = {}
+        SemiFunc.banished_words_noignore = {}
+        SemiFunc.banished_words = {}
+
         SemiFunc.banished_ids = data['ids']
         SemiFunc.banished_words_bypasses = data['bypasses']
         SemiFunc.banished_flagmsg = data['flagmsg']
@@ -405,11 +411,12 @@ class SemiFunc():
                 bot.logger.info(msg=f"{author}: {message_content}")
             else:
                 content = f"/{interaction.command.name}"
-                print(len(interaction.command.parameters))
+
                 if len(interaction.command.parameters) > 0:
                     for option in interaction.data["options"]:
                         content = f"{content} {option['name']}: {option['value']}"
                         # content = f"{content} {option['value']}"
+                
                 bot.logger.info(msg=f"{interaction.user.name}: {content}")
                 if interaction.command.name in files.get_staff_commands():
                     audit = ctx.guild.get_channel(SemiFunc.get_channel_id(ctx, "audit"))

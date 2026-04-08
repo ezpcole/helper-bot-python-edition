@@ -55,7 +55,7 @@ def create_app():
             json.dumps(misc_module.INFO, indent=4),
             mimetype="application/json"
         )
-
+    
     # @app.route("/")
     # def home():
     #     # return "am alive!!\n..maybe-"
@@ -76,7 +76,6 @@ def register(app: Flask):
     dashboard_api_module.update(bot_instance)
     
     app.register_blueprint(api_module.api)
-    app.register_blueprint(dashboard_api_module.api)
     app.register_blueprint(apiprivate_module.api)
 
 
@@ -90,20 +89,20 @@ class AppWrapper:
     
 # Reload shitty code
 def reload_all():
-    global current_app, wrapper, api_module, dashboard_api_module, apiprivate_module
+    global current_app, wrapper, api_module, apiprivate_module
 
     print("Procedure beginning shortly...")
 
-    api_module = importlib.reload(api_module)
-    dashboard_api_module = importlib.reload(dashboard_api_module)
-    apiprivate_module = importlib.reload(apiprivate_module)
+    if current_app != None:
+        api_module = importlib.reload(api_module)
+        apiprivate_module = importlib.reload(apiprivate_module)
 
-    new_app = create_app()
+        new_app = create_app()
 
-    register(new_app)
+        register(new_app)
 
-    wrapper.app = new_app
-    current_app = new_app
+        wrapper.app = new_app
+        current_app = new_app
 
     print("Subject 2...")
     print("relative...")
@@ -120,6 +119,4 @@ def run():
 
     wrapper = AppWrapper(current_app)
 
-    # run_simple("0.0.0.0", port, wrapper)
-    # run_simple("0.0.0.0", port, wrapper, ssl_context=("cert.pem", "key.pem"))
-    run_simple("0.0.0.0", port, wrapper, ssl_context=("89.187.7.35-2026-04-03-093725.pem", "89.187.7.35-2026-04-03-093725.pkey"))
+    run_simple("0.0.0.0", port, wrapper, ssl_context='adhoc')
