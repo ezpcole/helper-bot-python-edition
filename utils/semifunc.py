@@ -62,9 +62,10 @@ class SemiFunc():
 
     def get_channel_id(ctx: Union[Context, int], channelname: str):
         channelids = None
-        try:
+        
+        if type(ctx) == int:
             channelids = files.get_channel_ids(ctx)
-        except AttributeError:
+        else:
             channelids = files.get_channel_ids(ctx.guild.id)
 
         if channelids[channelname]:

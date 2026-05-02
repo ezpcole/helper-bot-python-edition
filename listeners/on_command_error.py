@@ -46,7 +46,9 @@ class OnCommandError(commands.Cog):
 
                 # 14/03/2026 - mute error:
                 if ctx.command.name == "mute":
-                    print(str(error))
+                    if str(error).find("Missing Permissions") >= 0:
+                        await ctx.reply("I can't manage that member, so I can't mute them")
+                        return
                     await ctx.reply(f"Argument missing or invaild duration. Duration Examples:\n5s-5 seconds\n5m-5 minutes\n5h-5 hours\n5d- 5 days\n\nMax duration is 28 days.")
                 else:
                     if err_handled_already == False:

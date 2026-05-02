@@ -122,6 +122,7 @@ class Database():
             
     def allow_ping(id: int):
         ping = Database.userdata_conn.execute(f"SELECT * FROM pings WHERE user_id={id}").fetchone()
+
         if ping == None:
             Database.userdata_conn.execute(f'INSERT INTO pings VALUES ({id}, {int("1")})')
             Database.userdata_conn.commit()

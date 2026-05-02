@@ -35,43 +35,32 @@ class RandomHugBoop(commands.Cog):
 
         while not bot.is_closed():
             await asyncio.sleep(3600) # Final
-            # await asyncio.sleep(20) # Testing time
+            # await asyncio.sleep(5) # Testing time
             
             # guild = bot.get_guild( config['test_server_id'] )
             guild = bot.get_guild( config['main_server_id'] )
             
-            random_member = random.choice(guild.members)
+            members = []
 
-            if random_member.bot == True:
-                # 30/04/2024, snowy: -w-
-                while True:
-                    new_rand = random.choice(guild.members)
+            # 02/05/2024, snowy: Other code didn't work out...
+            for member in guild.members:
+                if member.bot:
+                    continue
 
-                    if new_rand.bot == False:
-                        random_member = new_rand
-                        break
-                
-            if Database.allow_ping(random_member.id) == False:
-                # 01/05/2024, snowy: -w-
-                while True:
-                    new_rand = random.choice(guild.members)
+                if Database.allow_ping(member.id) == False:
+                    continue
 
-                    if Database.allow_ping(new_rand.id) == True:
-                        random_member = new_rand
-                        break
+                # Let's be respectable. If using offline, invisible or DND status, reroll
+                if member.status in [discord.Status.offline, discord.Status.invisible, discord.Status.dnd]:
+                    continue
 
-            # Let's be respectable. If using offline, invisible or DND status, reroll
-            if random_member.status in [discord.Status.offline, discord.Status.invisible, discord.Status.dnd]:
-                # 30/04/2024, snowy: not quite good, but I'm just to doing this for validating.
-                while True:
-                    new_rand = random.choice(guild.members)
+                members.append(member)
 
-                    if new_rand.status in [discord.Status.online, discord.Status.idle]:
-                        random_member = new_rand
-                        break
+            random_member = random.choice(members)
 
             choice = random.choice(["hug", "boop"])
             general_chat_id = SemiFunc.get_channel_id(guild.id, "general-chat")
+            # general_chat_id = 1491887133236138235
             general_chat = guild.get_channel(general_chat_id)
             await general_chat.send(f"{random_member.mention} ***{choice}***\n-# Opt out of this with ?pingoptout or /pingoptout in <#1477493580061741156>")
 
