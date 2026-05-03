@@ -1,3 +1,15 @@
+###############################################
+#
+# File: cogs.temp.econ.
+# Date: 17/03/2026 (EU)
+# Date Edited: 03/05/2026 (EU)
+# Purpose:
+#  
+# Author: snow2code
+#
+###############################################
+
+
 import utils.files as files
 
 from utils.econ import Economy
@@ -34,14 +46,14 @@ class Econ__Daily(commands.Cog):
         if Economy.econ__is_on_cooldown(ctx, ctx.author, self.bot.logger):
             await ctx.reply("You've already claimed your daily reward.. you can claim your next daily reward in {whatever time}.")
         else:
-            user = Database.userdata_conn.cursor().execute(f"SELECT * FROM user_data WHERE user_id={ctx.author.id}").fetchone()
+            user = Database.userdata_conn.execute(f"SELECT * FROM user_data WHERE user_id={ctx.author.id}").fetchone()
 
             Economy.use_econ(ctx, ctx.author, self.bot.logger)
 
             amount = files.get_config_entry("daily_reward")
             bal = user[4]
 
-            Database.userdata_conn.cursor().execute(f'UPDATE user_data SET tokens=? WHERE user_id=?', (bal + amount, ctx.author.id))
+            Database.userdata_conn.execute(f'UPDATE user_data SET tokens=? WHERE user_id=?', (bal + amount, ctx.author.id))
             Database.userdata_conn.commit()
             embed = Economy.econ_embed(
                 title="Daily Reward Claimed",

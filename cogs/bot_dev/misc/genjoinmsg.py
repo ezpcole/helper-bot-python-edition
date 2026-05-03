@@ -1,3 +1,16 @@
+###############################################
+#
+# File: cogs.bot_dev.misc.genjoinmsg
+# Date: Sometime in March 2026.. unsure
+# Date Edited: 03/05/2026 (EU)
+# Purpose: Command for generating a join message.
+#  Made for testing.
+#  
+# Author: snow2code
+#
+###############################################
+
+
 import os
 import discord
 import requests
@@ -26,7 +39,7 @@ class ManagerCommands__Misc__GenJoinMessage(commands.Cog):
         ctx: Context
             The context of the command invokation
         user: discord.Member
-            The users
+            The user to make a join image and message for
         """
         if SemiFunc.command_disabled(ctx):
             await ctx.reply("That command is currently disabled.")

@@ -4,7 +4,7 @@ import logging
 import importlib
 import dotenv
 
-from flask import Flask, Response, send_from_directory
+from flask import Flask, Response, send_from_directory, redirect, request
 from werkzeug.serving import run_simple
 from utils.discordbot import Bot
 
@@ -37,32 +37,27 @@ def create_app():
         response.headers["Expires"] = "0"
         return response
     
+    # @app.before_request
+    # def force_https():
+    #     if request.endpoint in app.view_functions and not request.is_secure:
+    #         return redirect(request.url.replace("http://", "https://"))
+
     @app.route("/")
-    def api_help():
-        return send_from_directory("", "index.html")
+    def home():
+        # return send_from_directory("", "index.html")
+
+
         # importlib.reload(misc_module)
         
         # return Response(
         #     json.dumps(misc_module.INFO, indent=4),
         #     mimetype="application/json"
         # )
-    
-    @app.errorhandler(404)
-    def api_help_404(error):
-        importlib.reload(misc_module)
-        
         return Response(
             json.dumps(misc_module.INFO, indent=4),
             mimetype="application/json"
         )
     
-    # @app.route("/")
-    # def home():
-    #     # return "am alive!!\n..maybe-"
-        
-    #     return send_from_directory("", "index.html")
-    #     # return render_template('index.php')
-
     # @app.errorhandler(404)
     # def notfound(error):
     #     return send_from_directory("", "index.html")
@@ -92,6 +87,8 @@ def reload_all():
     global current_app, wrapper, api_module, apiprivate_module
 
     print("Procedure beginning shortly...")
+    
+    importlib.reload(misc_module)
 
     if current_app != None:
         api_module = importlib.reload(api_module)
@@ -119,4 +116,8 @@ def run():
 
     wrapper = AppWrapper(current_app)
 
-    run_simple("0.0.0.0", port, wrapper, ssl_context='adhoc')
+    ## HTTPS
+    # run_simple("0.0.0.0", port, wrapper, ssl_context='adhoc')
+
+    ## HTTP
+    run_simple("0.0.0.0", port, wrapper)

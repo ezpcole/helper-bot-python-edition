@@ -1,3 +1,17 @@
+###############################################
+#
+# File: utils.econ
+# Date: 16/03/2026 (EU)
+# Date Edited: 03/05/2026 (EU)
+# Purpose:
+#  
+# Author: snow2code
+#
+###############################################
+
+
+import os
+import dotenv
 import discord
 
 from logging import Logger
@@ -6,11 +20,18 @@ from utils.custom.context import Context
 from utils.database import Database
 import utils.files as files
 
+## To be safe.
+# dotenv.load_dotenv()
+
 class Economy():
     def __init__(*args, **kargs):
         super().__init__(*args, **kargs)
 
-    def econ_embed(title: str="Title", description: str="Description", user: discord.Member=None, fields: [] = []):
+    def get_web_address():
+        # return os.getenv('WEB_ADDRESS')
+        return "http://fluffy-concourse.vercel.app/econ/leaderboard.html"
+
+    def econ_embed(title: str="Title", description: str="Description", user: discord.Member=None, fields: list = []):
         embed = discord.Embed(title=title,description=description,color=discord.Color.pink())
 
         if len(fields) > 0:
@@ -31,13 +52,13 @@ class Economy():
         return f'{amount:,}'
 
     def use_econ(ctx: Context, user: discord.Member, logger: Logger):
-        conn = Database.userdata_conn.cursor()
+        conn = Database.userdata_conn
 
         conn.execute(f'UPDATE user_data SET used=? WHERE user_id=?', (1, ctx.author.id))
 
 
     def econ__is_on_cooldown(ctx: Context, user: discord.Member, logger: Logger):
-        cooldowns = Database.userdata_conn.cursor().execute("SELECT * FROM cooldowns")
+        cooldowns = Database.userdata_conn.execute("SELECT * FROM cooldowns")
         usr_cooldown = None
 
         for cooldown in cooldowns:
@@ -55,7 +76,7 @@ class Economy():
             # Confused me a bit. so-
             # If the current day is more than the cooldowns day, return False.
             if day_now > day_cooldown:
-                Database.userdata_conn.cursor().execute(f'DELETE FROM cooldowns WHERE user_id={user.id} AND command="{ctx.command.name}"')
+                Database.userdata_conn.execute(f'DELETE FROM cooldowns WHERE user_id={user.id} AND command="{ctx.command.name}"')
                 Database.userdata_conn.commit()
 
                 logger.info(f"Removed {user.name}'s cooldown.")
@@ -67,7 +88,7 @@ class Economy():
     def econ__put_on_cooldown(ctx: Context, user: discord.Member, logger: Logger):
         date = datetime.now().strftime('%d/%m/%Y')
         if Economy.econ__is_on_cooldown(ctx, user, logger) == False:
-            Database.userdata_conn.cursor().execute(f'INSERT INTO cooldowns VALUES ({user.id}, "{ctx.command.name}", "{date}")')
+            Database.userdata_conn.execute(f'INSERT INTO cooldowns VALUES ({user.id}, "{ctx.command.name}", "{date}")')
             Database.userdata_conn.commit()
             
             logger.info(f"Put {user.name} on a cooldown for {ctx.command.name}.")

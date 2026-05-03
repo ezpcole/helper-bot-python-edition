@@ -1,3 +1,15 @@
+###############################################
+#
+# File: cogs.bot_dev.misc.web_api
+# Date: 30/03/2026 (EU)
+# Date Edited: 03/05/2026 (EU)
+# Purpose:
+#  
+# Author: snow2code
+#
+###############################################
+
+
 import os
 
 from discord.ext import commands
@@ -35,6 +47,10 @@ class ManagerCommands__Misc__Web(commands.Cog):
             
         app_module.reload_all()
         if os.name.lower() == "nt":
+            os.system("clear")
+        elif os.name.lower() == "posix":
+            print("\033c")
+            print("clear")
             os.system("clear")
         else:
             os.system("cls")
@@ -75,6 +91,10 @@ class ManagerCommands__Misc__Web(commands.Cog):
                 return
         
         if os.name.lower() == "nt":
+            os.system("clear")
+        elif os.name.lower() == "posix":
+            print("\033c")
+            print("clear")
             os.system("clear")
         else:
             os.system("cls")

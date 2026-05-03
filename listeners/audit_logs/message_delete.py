@@ -1,3 +1,15 @@
+###############################################
+#
+# File: listeners.audit_logs.message_delete
+# Date: 02/05/2026 (EU)
+# Date Edited: 03/05/2026 (EU)
+# Purpose:
+#  
+# Author: snow2code
+#
+###############################################
+
+
 import os
 import re
 import discord
@@ -125,10 +137,10 @@ class OnMessageDelete(commands.Cog):
                         auditChannelId = files.get_channel_id(message, "audit")
                         auditChannel = self.bot.get_channel(auditChannelId)
                         embed = self.bot.create_embed_notitle(color=discord.Color.red())
+                        embed.description = f"**Message sent by {message.author.mention} was deleted in {message.channel.mention}**"
                         files_msg = []
                         
                         if len(message.attachments) > 0:
-                            embed.description = f"**Message sent by {message.author.mention} was deleted in {message.channel.mention}**"
                             
                             if not os.path.exists("assets/attachments"):
                                 os.mkdir("assets/attachments")

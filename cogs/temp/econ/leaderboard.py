@@ -1,3 +1,15 @@
+###############################################
+#
+# File: cogs.temp.econ.
+# Date: 16/03/2026 (EU)
+# Date Edited: 03/05/2026 (EU)
+# Purpose:
+#  
+# Author: snow2code
+#
+###############################################
+
+
 import discord
 
 from utils.econ import Economy
@@ -31,7 +43,7 @@ class Econ__Leaderboard(commands.Cog):
             # await ctx.message.delete()
             return
         
-        user_data = Database.userdata_conn.cursor().execute(f"SELECT * FROM user_data ORDER BY tokens DESC").fetchmany(10)
+        user_data = Database.userdata_conn.execute(f"SELECT * FROM user_data ORDER BY tokens DESC").fetchmany(10)
         top10 = []
 
         for user in user_data:
@@ -41,7 +53,8 @@ class Econ__Leaderboard(commands.Cog):
                     'balance': user[4]
                 })
 
-        embed: discord.Embed = Economy.econ_embed(title="Balance Leaderboard", description="View the [online leaderboard](https://fluffy-helper.page.gd/econ/leaderboard).")
+        # https://fluffy-helper.page.gd/econ/leaderboard
+        embed: discord.Embed = Economy.econ_embed(title="Balance Leaderboard", description=f"View the [online leaderboard]({Economy.get_web_address()}).")
         embed.set_author(name=ctx.guild.name, icon_url=ctx.guild.icon)
         embed.set_thumbnail(url=self.bot.user.avatar.url)
         i = 1

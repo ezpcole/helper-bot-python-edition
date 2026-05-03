@@ -1,3 +1,15 @@
+###############################################
+#
+# File: cogs.users.misc.afk
+# Date: 06/03/2026 (EU)
+# Date Edited: 03/05/2026 (EU)
+# Purpose:
+#  
+# Author: snow2code
+#
+###############################################
+
+
 import sqlite3
 
 from utils.database import Database
@@ -84,12 +96,10 @@ class UserCommands__Misc__AFK(commands.Cog):
         if is_already_afk:
             await ctx.reply("Cannot change your status to AFK because you've already used ?afk or /afk. Did you mean to use ?afkupdate?")
         else:
-            cursor = Database.userdata_conn.cursor()
-            
             nick = usernick(ctx)
             afkSince_createdat = ctx.message.created_at.strftime("%d/%m/%Y %H:%M")
 
-            cursor.execute(f'INSERT INTO afk_users VALUES ({ctx.author.id}, "{nick['nick']}", "{message}", "{afkSince_createdat}", 0)')
+            Database.userdata_conn.execute(f'INSERT INTO afk_users VALUES ({ctx.author.id}, "{nick['nick']}", "{message}", "{afkSince_createdat}", 0)')
 
             Database.userdata_conn.commit()
 
@@ -152,9 +162,7 @@ class UserCommands__Misc__AFK(commands.Cog):
                 is_already_afk = True
 
         if is_already_afk:
-            cursor = Database.userdata_conn.cursor()
-
-            cursor.execute(f"UPDATE afk_users SET message=? WHERE user_id = ?", (message, ctx.author.id))
+            Database.userdata_conn.execute(f"UPDATE afk_users SET message=? WHERE user_id = ?", (message, ctx.author.id))
             await ctx.reply(f"I've set your AFK message to `{message}`")
 
             Database.userdata_conn.commit()
@@ -198,8 +206,7 @@ class UserCommands__Misc__AFK(commands.Cog):
                 is_already_afk = True
 
         if is_already_afk:
-            cursor = Database.userdata_conn.cursor()
-            toggle = cursor.execute(f"SELECT toggle FROM afk_users WHERE user_id = ?", (ctx.author.id,)).fetchone()[0]
+            toggle = Database.userdata_conn.execute(f"SELECT toggle FROM afk_users WHERE user_id = ?", (ctx.author.id,)).fetchone()[0]
             new_toggle = 1
 
             msg = "I've toggled your afk status from being removed.. it cannot be removed now from chatting."
@@ -214,7 +221,7 @@ class UserCommands__Misc__AFK(commands.Cog):
                 msg = "I've toggled your afk status from being removed.. it cannot be removed now from chatting."
                 new_toggle = 1
 
-            cursor.execute(f"UPDATE afk_users SET toggle=? WHERE user_id = ?", (new_toggle, ctx.author.id))
+            Database.userdata_conn.execute(f"UPDATE afk_users SET toggle=? WHERE user_id = ?", (new_toggle, ctx.author.id))
             await ctx.reply(msg)
 
             Database.userdata_conn.commit()

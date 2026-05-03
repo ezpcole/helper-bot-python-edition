@@ -1,3 +1,15 @@
+###############################################
+#
+# File: listeners.on__message.afk_mention
+# Date: 07/03/2026 (EU)
+# Date Edited: 03/05/2026 (EU)
+# Purpose:
+#  
+# Author: snow2code
+#
+###############################################
+
+
 import discord
 
 from datetime import datetime
@@ -49,6 +61,7 @@ class AFKMention(commands.Cog):
                                 if days > 1 or days == 0:
                                     days_text = "days"
 
+                                print(f"{mention.name} AFK\nminutes: {minutes}\nhours: {hours}\ndays: {days}")
                                 if minutes > 0 and hours == 0 and days == 0:
                                     await msg.reply(f"`{afk_user['name']}` is AFK: {afk_user['message']}\nThey've been AFK for {minutes} {minutes_text}")
                                 if hours > 0 and days == 0:

@@ -1,3 +1,15 @@
+###################################################
+#
+# File: listeners.bot_reactions.random_messages
+# Date: 26/03/2026 (EU)
+# Date Edited: 03/05/2026 (EU)
+# Purpose:
+#  
+# Author: snow2code
+#
+###################################################
+
+
 import random
 import asyncio
 
@@ -67,11 +79,12 @@ class RandomMessages(commands.Cog):
 
     @commands.Cog.listener()
     async def on_connect(self):
-        if self.owo == False:
-            self.owo = True
-            # await change_status(self.bot)
-            self.bot.loop.create_task(status_loop(self.bot))
-            # await self.bot.change_presence(status=discord.Status.online, activity=discord.CustomActivity(name="It's normal to lose interest in life.. snowy has lost *ALL* interest in life..."))
+        pass
+        # if self.owo == False:
+        #     self.owo = True
+        #     # await change_status(self.bot)
+        #     self.bot.loop.create_task(status_loop(self.bot))
+        #     # await self.bot.change_presence(status=discord.Status.online, activity=discord.CustomActivity(name="It's normal to lose interest in life.. snowy has lost *ALL* interest in life..."))
 
 async def setup(bot):
     await bot.add_cog(RandomMessages(bot))

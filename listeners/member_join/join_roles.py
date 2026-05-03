@@ -1,3 +1,15 @@
+###############################################
+#
+# File: listeners.member_join.join_roles
+# Date: 03/03/2026 (EU)
+# Date Edited: 03/05/2026 (EU)
+# Purpose:
+#  
+# Author: snow2code
+#
+###############################################
+
+
 import discord
 
 from discord.ext import commands
@@ -26,8 +38,11 @@ class OnMemberJoin(commands.Cog):
                 if rolea == "bots" and member.bot == False:
                     can_give = False
 
-                if can_give:
-                    await member.add_roles(role, reason="Join Roles")
+                try:
+                    if can_give:
+                        await member.add_roles(role, reason="Join Roles")
+                except discord.errors.Forbidden as e:
+                    self.bot.logger.warn(f"Cannot give {member.name} the role {role.name} because of a permission error - {e}")
             else:
                 self.bot.logger.warn(f"Cannot give {member.name} the role {rolea} as it doesn't exist!")
 

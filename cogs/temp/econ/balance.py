@@ -1,3 +1,15 @@
+###############################################
+#
+# File: cogs.temp.econ.
+# Date: 15/03/2026 (EU)
+# Date Edited: 03/05/2026 (EU)
+# Purpose:
+#  
+# Author: snow2code
+#
+###############################################
+
+
 import discord
 
 from utils.econ import Economy
@@ -44,7 +56,7 @@ class Econ__Balance(commands.Cog):
 
         not_in_db_msg = "They aren't in our user database, so we can't tell you their balance at the moment."
         have_text = user_real.name
-        user_data = Database.userdata_conn.cursor().execute(f"SELECT * FROM user_data WHERE user_id={user_real.id}").fetchone()
+        user_data = Database.userdata_conn.execute(f"SELECT * FROM user_data WHERE user_id={user_real.id}").fetchone()
         if user_real.id == ctx.author.id:
             have_text = "You have"
             not_in_db_msg = "You aren't in our user database, so we can't tell you your balance at the moment."

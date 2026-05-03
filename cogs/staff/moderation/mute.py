@@ -1,3 +1,15 @@
+###############################################
+#
+# File: cogs.staff.moderation.mute
+# Date: 06/03/2026 (EU)
+# Date Edited: 03/05/2026 (EU)
+# Purpose: Command for muting a user.
+#  
+# Author: snow2code
+#
+###############################################
+
+
 import re
 import discord
 
@@ -66,6 +78,7 @@ class Staff(commands.Cog):
                     await ctx.reply(f"Bots cannot be banished, banned, muted or kicked.")
                 return
             
+            print(f"yo {ctx.message.content}")
             await SemiFunc.log_command_use(self.bot, ctx.author, ctx.message.content, ctx.interaction, ctx)
             
             errors = []
