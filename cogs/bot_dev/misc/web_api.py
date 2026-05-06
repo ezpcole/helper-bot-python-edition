@@ -2,7 +2,7 @@
 #
 # File: cogs.bot_dev.misc.web_api
 # Date: 30/03/2026 (EU)
-# Date Edited: 03/05/2026 (EU)
+# Date Edited: 06/05/2026 (EU)
 # Purpose:
 #  
 # Author: snow2code
@@ -12,6 +12,7 @@
 
 import os
 
+from discord import app_commands
 from discord.ext import commands
 from utils.custom.context import Context
 from utils.discordbot import Bot
@@ -25,6 +26,8 @@ class ManagerCommands__Misc__Web(commands.Cog):
 
     @commands.guild_only()
     @commands.hybrid_command(name="reloadweb")
+    @app_commands.allowed_installs(guilds=True, users=False)
+    @app_commands.allowed_contexts(guilds=True, dms=False, private_channels=False)
     async def reloadweb(self, ctx: Context):
         """
         Reload the web modules

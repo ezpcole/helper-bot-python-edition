@@ -37,9 +37,7 @@ class Test__Ping(commands.Cog):
         ctx: Context
             The context of the command invocation
         """
-        ping = f"{round(self.bot.latency * 1000)}ms"
-        
-        await ctx.reply(f"Pong.\nBot ping: {ping}")
+        await ctx.reply(f"Pong. `{round(self.bot.latency * 1000)}ms`")
         
 async def setup(bot):
     await bot.add_cog(Test__Ping(bot))

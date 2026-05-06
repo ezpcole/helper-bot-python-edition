@@ -2,7 +2,7 @@
 #
 # File: listeners.on__message.ping_everyone
 # Date: 21/02/2026 (EU)
-# Date Edited: 03/05/2026 (EU)
+# Date Edited: 06/05/2026 (EU)
 # Purpose:
 #  
 # Author: snow2code
@@ -28,8 +28,8 @@ class MessageEvent__PingEveryone(commands.Cog):
             if msg.author.bot == False:
                 staff_role = SemiFunc.get_role_id(msg, "staff")
                 if not SemiFunc.can_use_command(msg, msg.author, "staff"):
-                    if msg.mention_everyone:
-                        await msg.reply("Nice try... You can't ping `@everyone`.")
+                    if msg.mention_everyone or msg.content.find("@everyone") >= 0:
+                        await msg.reply("Nice try... You can't ping everyone.\nYes, it's still possible, but it doesn't ping anyone.")
                         ## Later - Add delete as needed.
                         # await msg.delete()
 

@@ -2,6 +2,9 @@
 #
 # File: bot
 # Date: 01/03/2026 (EU)
+# Date Edited: 06/05/2026 (EU)
+# Purpose:
+#  
 # Author: snow2code
 #
 ###############################################
@@ -48,7 +51,8 @@ if good_to_go == True:
         ),
         intents=discord.Intents.all(),
         help_command = None,
-        case_insensitive=True
+        case_insensitive=True,
+        shard_count=4 ## 06/05/2026 (EU), snowy: Good Idea?
     )
 
     app.bot_instance = bot

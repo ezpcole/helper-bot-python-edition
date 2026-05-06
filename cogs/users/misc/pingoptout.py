@@ -2,7 +2,7 @@
 #
 # File: cogs.users.misc.pingoptout
 # Date: 30/04/2026 (EU)
-# Date Edited: 03/05/2026 (EU)
+# Date Edited: 06/05/2026 (EU)
 # Purpose: 
 #  
 # Author: snow2code
@@ -10,6 +10,7 @@
 ###############################################
 
 
+from discord import app_commands
 from discord.ext import commands
 from discord.errors import *
 from utils.discordbot import Bot
@@ -22,6 +23,8 @@ class UserCommands__Misc__Pingoptout(commands.Cog):
         
     @commands.guild_only()
     @commands.hybrid_command(name="pingoptout")
+    @app_commands.allowed_installs(guilds=True, users=False)
+    @app_commands.allowed_contexts(guilds=True, dms=True, private_channels=False)
     async def pingoptout(self, ctx: Context):
         """
         Opt out of random hug or boop pings from the bot

@@ -49,6 +49,8 @@ class BoostMessage(commands.Cog):
             if not os.path.exists("assets/profile_pictures"):
                 os.makedirs("assets/profile_pictures")
 
+            print(f"{member.name} boosted the server!\nTotal boosts: {total_boosts}\nCurrent boosts: {cur_boosts}")
+
             try:
                 response = requests.get(f"{member.display_avatar.url}", timeout=10)
                 response.raise_for_status()
@@ -58,7 +60,7 @@ class BoostMessage(commands.Cog):
 
                 img_resize.save(f"assets/profile_pictures/{member.name}.webp")
 
-                # print("Downloaded and resized. Path: assets/profile_pictures/"+member.name+".webp")
+                print("Downloaded and resized. Path: assets/profile_pictures/"+member.name+".webp")
             except requests.exceptions.RequestException as e:
                 self.bot.logger.warn(f"Error downloading {member.name}'s profile picture: {e}")
             except IOError as e:
@@ -72,7 +74,7 @@ class BoostMessage(commands.Cog):
 
             draw = ImageDraw.Draw(base)
 
-            text = str(total_boosts)
+            text = str(cur_boosts)
             font = ImageFont.truetype("assets/fonts/Noto_Sans_SC/NotoSansSC-SemiBold.ttf", 280)
 
             padding = 25
@@ -115,8 +117,8 @@ class BoostMessage(commands.Cog):
             
             draw.text((text_x, text_y), text, font=font, fill="white")
 
-            base.save(f"assets/boost_images/{member.id}_{total_boosts}.png")            
-            await boosts_channel.send(files=[discord.File(f"assets/boost_images/{member.id}_{total_boosts}.png")])
+            base.save(f"assets/boost_images/{member.id}_{cur_boosts}.png")            
+            await boosts_channel.send(files=[discord.File(f"assets/boost_images/{member.id}_{cur_boosts}.png")])
             await boosts_channel.edit(topic=f"Thanks for the boosts! Total boosts: {total_boosts}")
 
 

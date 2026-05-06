@@ -40,9 +40,9 @@ class RandomHugBoop(commands.Cog):
             await asyncio.sleep(3600) # Final
             # await asyncio.sleep(5) # Testing time
             
-            # guild = bot.get_guild( config['test_server_id'] )
-            guild = bot.get_guild( config['main_server_id'] )
-            
+            guild = bot.get_guild( config['test_server_id'] )
+            # guild = bot.get_guild( config['main_server_id'] )
+
             members = []
 
             # 02/05/2024, snowy: Other code didn't work out...
@@ -62,8 +62,8 @@ class RandomHugBoop(commands.Cog):
             random_member = random.choice(members)
 
             choice = random.choice(["hug", "boop"])
-            general_chat_id = SemiFunc.get_channel_id(guild.id, "general-chat")
-            # general_chat_id = 1491887133236138235
+            # general_chat_id = SemiFunc.get_channel_id(guild.id, "general-chat")
+            general_chat_id = 1501656987761643551
             general_chat = guild.get_channel(general_chat_id)
             await general_chat.send(f"{random_member.mention} ***{choice}***\n-# Opt out of this with ?pingoptout or /pingoptout in <#1477493580061741156>")
 
