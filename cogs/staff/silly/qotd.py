@@ -48,7 +48,5 @@ class qotd(commands.Cog):
             qotd_channel.send(f"{qotd_role.mention}\nA new Question of the Day has arrived: {qotd_msg}\nPut your answers in {general_channel.mention}\n-# opt out of this through self roles...if you really want to")
         await SemiFunc.log_command_use(self.bot, ctx.author, ctx.message.content, ctx.interaction, ctx)
 
-
-
 async def setup(bot):
     await bot.add_cog(qotd(bot))
