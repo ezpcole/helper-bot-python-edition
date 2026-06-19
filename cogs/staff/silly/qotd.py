@@ -2,7 +2,7 @@
 #
 # File: cogs.staff.silly.qotd
 # Date: 6/18/2026 (NAW)
-# Date Edited: 6/18/2026 (NAW)
+# Date Edited: 6/19/2026 (NAW)
 # Purpose: question of the day
 #  
 # Author: e4za
@@ -57,7 +57,7 @@ class qotd(commands.Cog):
             channel = ctx.guild.get_channel(1414222708324958385)
 
         # snowy: added comment for command to opt out instead.. as some don't have self roles visible
-        channel.send(f"{qotd_role.mention}\nA new Question of the Day has arrived: {qotd_msg}\nPut your answers in {channel.mention}\n-# opt out of this through self roles or with ?pingoptout qotd in bot commands...if you really want to")
+        await channel.send(f"{qotd_role.mention}\nA new Question of the Day has arrived: {qotd_msg}\nPut your answers in {channel.mention}\n-# opt out of this through self roles or with ?pingoptout qotd in bot commands...if you really want to")
 
 
 async def setup(bot):
