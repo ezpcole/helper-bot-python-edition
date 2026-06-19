@@ -2,7 +2,7 @@
 #
 # File: cogs.bot_dev.reload
 # Date: Sometime in March or April of 2026
-# Date Edited: 03/05/2026 (EU)
+# Date Edited: 07/05/2026 (EU)
 # Purpose:
 #  
 # Author: snow2code
@@ -14,6 +14,7 @@ import os
 import discord
 import importlib
 
+from discord import app_commands
 from discord.ext import commands
 from utils.custom.context import Context
 from utils.discordbot import Bot
@@ -25,6 +26,8 @@ class CogStuff(commands.Cog):
 
     @commands.guild_only()
     @commands.hybrid_command(name="reloadutil")
+    @app_commands.allowed_installs(guilds=True, users=False)
+    @app_commands.allowed_contexts(guilds=True, dms=False, private_channels=False)
     async def reloadutil(self, ctx: Context, name: str):
         """
         And now I'll wave, so long! -- Placeholder
@@ -59,6 +62,8 @@ class CogStuff(commands.Cog):
 
     @commands.guild_only()
     @commands.hybrid_command(name="reloadutils")
+    @app_commands.allowed_installs(guilds=True, users=False)
+    @app_commands.allowed_contexts(guilds=True, dms=False, private_channels=False)
     async def reloadutils(self, ctx: Context):
         """
         And now I'll wave, so long! -- Placeholder
@@ -119,6 +124,8 @@ class CogStuff(commands.Cog):
 
     @commands.guild_only()
     @commands.hybrid_command(name="unloadlisteners")
+    @app_commands.allowed_installs(guilds=True, users=False)
+    @app_commands.allowed_contexts(guilds=True, dms=False, private_channels=False)
     async def unloadlisteners(self, ctx: Context):
         """
         And now I'll wave, so long! -- Placeholder
@@ -196,6 +203,8 @@ class CogStuff(commands.Cog):
 
     @commands.guild_only()
     @commands.hybrid_command(name="loadlisteners")
+    @app_commands.allowed_installs(guilds=True, users=False)
+    @app_commands.allowed_contexts(guilds=True, dms=False, private_channels=False)
     async def loadlisteners(self, ctx: Context):
         """
         And now I'll wave, so long! -- Placeholder
@@ -274,6 +283,8 @@ class CogStuff(commands.Cog):
 
     @commands.guild_only()
     @commands.hybrid_command(name="reloadlistener")
+    @app_commands.allowed_installs(guilds=True, users=False)
+    @app_commands.allowed_contexts(guilds=True, dms=False, private_channels=False)
     async def reloadlistener(self, ctx: Context, what: str, name: str):
         """
         And now I'll wave, so long! -- Placeholder
@@ -306,6 +317,8 @@ class CogStuff(commands.Cog):
 
     @commands.guild_only()
     @commands.hybrid_command(name="loadlistener")
+    @app_commands.allowed_installs(guilds=True, users=False)
+    @app_commands.allowed_contexts(guilds=True, dms=False, private_channels=False)
     async def loadlistener(self, ctx: Context, what: str, name: str):
         """
         And now I'll wave, so long! -- Placeholder
@@ -338,6 +351,8 @@ class CogStuff(commands.Cog):
 
     @commands.guild_only()
     @commands.hybrid_command(name="unloadlistener")
+    @app_commands.allowed_installs(guilds=True, users=False)
+    @app_commands.allowed_contexts(guilds=True, dms=False, private_channels=False)
     async def unloadlistener(self, ctx: Context, what: str, name: str):
         """
         And now I'll wave, so long! -- Placeholder
@@ -371,6 +386,8 @@ class CogStuff(commands.Cog):
     ## Commands
     @commands.guild_only()
     @commands.hybrid_command(name="reload")
+    @app_commands.allowed_installs(guilds=True, users=False)
+    @app_commands.allowed_contexts(guilds=True, dms=False, private_channels=False)
     async def reload(self, ctx: Context, what: str, sub: str, name: str):
         """
         And now I'll wave, so long! -- Placeholder
@@ -405,6 +422,8 @@ class CogStuff(commands.Cog):
 
     @commands.guild_only()
     @commands.hybrid_command(name="load")
+    @app_commands.allowed_installs(guilds=True, users=False)
+    @app_commands.allowed_contexts(guilds=True, dms=False, private_channels=False)
     async def load(self, ctx: Context, what: str, sub: str, name: str):
         """
         And now I'll wave, so long! -- Placeholder
@@ -439,6 +458,8 @@ class CogStuff(commands.Cog):
 
     @commands.guild_only()
     @commands.hybrid_command(name="unload")
+    @app_commands.allowed_installs(guilds=True, users=False)
+    @app_commands.allowed_contexts(guilds=True, dms=False, private_channels=False)
     async def unload(self, ctx: Context, what: str, sub: str, name: str):
         """
         Unload a command.
@@ -473,6 +494,8 @@ class CogStuff(commands.Cog):
 
     @commands.guild_only()
     @commands.hybrid_command(name="reloadall")
+    @app_commands.allowed_installs(guilds=True, users=False)
+    @app_commands.allowed_contexts(guilds=True, dms=False, private_channels=False)
     async def reloadall(self, ctx: Context):
         """
         Reload all listeners and commands.
@@ -499,6 +522,7 @@ class CogStuff(commands.Cog):
         
         listeners = 0
         commands = 0
+
         for what in os.listdir("listeners"):
             gud = True
             if what == "__pycache__":
@@ -513,6 +537,14 @@ class CogStuff(commands.Cog):
                         success.append(f"listeners.{name}")
                     except Exception as e:
                         failed.append(f"listeners.{name} - {e}")
+
+            if what == "!test":
+                # Test bot? Load testing
+                if self.bot.user.id == 1482861019582693507:
+                    gud = True
+                    print("Load test")
+                else:
+                    gud = False
 
             if gud:
                 for file in os.listdir(f"listeners/{what}"):
@@ -534,16 +566,24 @@ class CogStuff(commands.Cog):
             if who == "__pycache__":
                 gud = False
 
+            if what == "!test":
+                # Test bot? Load testing
+                if self.bot.user.id == 1482861019582693507:
+                    gud = True
+                    print("Load test")
+                else:
+                    gud = False
+                    
             if gud:
                 for sub in os.listdir(f"cogs/{who}"):
                     gud_test = True
-                    if sub == "test":
-                        if self.bot.user.id == 1482861019582693507:
-                            self.bot.logger.info("Load test commands.")
-                            gud_test = True
-                        else:
-                            self.bot.logger.info("Don't load test commands.")
-                            gud_test = False
+                    # if sub == "test":
+                    #     if self.bot.user.id == 1482861019582693507:
+                    #         self.bot.logger.info("Load test commands.")
+                    #         gud_test = True
+                    #     else:
+                    #         self.bot.logger.info("Don't load test commands.")
+                    #         gud_test = False
 
                         
                     if gud_test == True:

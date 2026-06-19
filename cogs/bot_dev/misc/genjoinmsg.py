@@ -2,7 +2,7 @@
 #
 # File: cogs.bot_dev.misc.genjoinmsg
 # Date: Sometime in March 2026.. unsure
-# Date Edited: 03/05/2026 (EU)
+# Date Edited: 06/05/2026 (EU)
 # Purpose: Command for generating a join message.
 #  Made for testing.
 #  
@@ -17,6 +17,7 @@ import requests
 
 from io import BytesIO
 from PIL import Image, ImageFont, ImageDraw
+from discord import app_commands
 from discord.ext import commands
 from discord.errors import *
 from discord.ext.commands.errors import *
@@ -30,6 +31,8 @@ class ManagerCommands__Misc__GenJoinMessage(commands.Cog):
 
     @commands.guild_only()
     @commands.hybrid_command(name="genjoinmessage")
+    @app_commands.allowed_installs(guilds=True, users=False)
+    @app_commands.allowed_contexts(guilds=True, dms=False, private_channels=False)
     async def genjoinmessage(self, ctx: Context, user: discord.Member):
         """
         Make a user's join image

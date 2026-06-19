@@ -2,7 +2,7 @@
 #
 # File: cogs.bot_dev.bot.sync
 # Date: Sometime in March or April of 2026.
-# Date Edited: 03/05/2026 (EU)
+# Date Edited: 06/05/2026 (EU)
 # Purpose:
 #  
 # Author: snow2code
@@ -10,6 +10,7 @@
 ###############################################
 
 
+from discord import app_commands
 from discord.ext import commands
 from utils.custom.context import Context
 from utils.discordbot import Bot
@@ -28,6 +29,8 @@ class Sync(commands.Cog):
 
     @commands.guild_only()
     @commands.hybrid_command(name="syncjobs")
+    @app_commands.allowed_installs(guilds=True, users=False)
+    @app_commands.allowed_contexts(guilds=True, dms=False, private_channels=False)
     async def syncjobs(self, ctx: Context):
         """
         Sync the job list from the database
@@ -51,9 +54,10 @@ class Sync(commands.Cog):
         SemiFunc.update_jobs(self.bot.logger)
         await ctx.reply(f"Updating the job list in the background. This won't be displayed besides from this message.")
 
-
     @commands.guild_only()
     @commands.hybrid_command(name="sync")
+    @app_commands.allowed_installs(guilds=True, users=False)
+    @app_commands.allowed_contexts(guilds=True, dms=False, private_channels=False)
     async def sync(self, ctx: Context):
         """
         Sync the bot's commands
@@ -78,6 +82,8 @@ class Sync(commands.Cog):
 
     @commands.guild_only()
     @commands.hybrid_command(name="syncafkusers")
+    @app_commands.allowed_installs(guilds=True, users=False)
+    @app_commands.allowed_contexts(guilds=True, dms=False, private_channels=False)
     async def syncafkusers(self, ctx: Context):
         """
         Sync AFK users from the database.
@@ -103,6 +109,8 @@ class Sync(commands.Cog):
 
     @commands.guild_only()
     @commands.hybrid_command(name="syncbanishedlist")
+    @app_commands.allowed_installs(guilds=True, users=False)
+    @app_commands.allowed_contexts(guilds=True, dms=False, private_channels=False)
     async def syncbanishedlist(self, ctx: Context):
         """
         Sync the banished list from the database
