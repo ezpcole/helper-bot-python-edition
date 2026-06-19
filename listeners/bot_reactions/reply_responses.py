@@ -30,36 +30,32 @@ responses = [
         "reply": "How about YOU shut up instead!?",
         "only": "None"
     },
-    # {
-    #     "search_word": "clanker",
-    #     "reply": "You're the clanker.",
-    #     "only": "None"
-    # },
+
 
     ## Affection
     {
-        "search_word": "belly rubs",
+        "search_word": "*belly rubs",
         "reply": ">w<",
         "only": "None"
     },
     
     {
-        "search_word": "chin scratch",
+        "search_word": "*chin scratch",
         "reply": ">w<",
         "only": "None"
     },
     {
-        "search_word": "ear scratch",
+        "search_word": "*ear scratch",
         "reply": ">w<",
         "only": "None"
     },
     {
-        "search_word": "scratches chin",
+        "search_word": "*scratches chin",
         "reply": ">w<",
         "only": "None"
     },
     {
-        "search_word": "scratches ears",
+        "search_word": "*scratches ears",
         "reply": ">w<",
         "only": "None"
     },

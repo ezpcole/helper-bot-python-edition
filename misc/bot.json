@@ -1,5 +1,6 @@
 {
     "_INFO": "This file holds info / configs for the bot, such as status message IDs and other.",
+    "bot_version": "2.3.1",
     
     "statuses": [
         {"activity": "custom", "message": "Watching general chat for sillies and rule breakers"},

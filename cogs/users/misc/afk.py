@@ -100,7 +100,6 @@ class UserCommands__Misc__AFK(commands.Cog):
             afkSince_createdat = ctx.message.created_at.strftime("%d/%m/%Y %H:%M")
 
             Database.userdata_conn.execute(f'INSERT INTO afk_users VALUES ({ctx.author.id}, "{nick['nick']}", "{message}", "{afkSince_createdat}", 0)')
-
             Database.userdata_conn.commit()
 
             try:
@@ -118,6 +117,7 @@ class UserCommands__Misc__AFK(commands.Cog):
             except Forbidden as e:
                 if e.text == "Missing Permissions":
                     await ctx.reply(f"I've set your status to AFK with the message `{message}`\n..however I cannot change your nickname to show you're AFK.")
+                    self.bot.logger.warn(e)
             # except CommandInvokeError as e:
             #     print(e)
 

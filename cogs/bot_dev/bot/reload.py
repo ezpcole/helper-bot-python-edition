@@ -2,7 +2,7 @@
 #
 # File: cogs.bot_dev.reload
 # Date: Sometime in March or April of 2026
-# Date Edited: 06/05/2026 (EU)
+# Date Edited: 07/05/2026 (EU)
 # Purpose:
 #  
 # Author: snow2code
@@ -523,32 +523,6 @@ class CogStuff(commands.Cog):
         listeners = 0
         commands = 0
 
-        # Test bot? Load test cogs and listeners
-        if self.bot.user.id == 1482861019582693507:
-            for what in os.listdir("test/listeners"):
-                if not what.endswith(".py"):
-                    continue
-                
-                listeners = listeners + 1
-                name = what[:-3]
-                try:
-                    await self.bot.reload_extension(f"listeners.{name}")
-                    success.append(f"listeners.{name}")
-                except Exception as e:
-                    failed.append(f"listeners.{name} - {e}")
-
-            for what in os.listdir("test/cogs"):
-                if not what.endswith(".py"):
-                    continue
-
-                commands = commands + 1
-                name = what[:-3]
-                try:
-                    await self.bot.reload_extension(f"cogs.{name}")
-                    success.append(f"cogs.{name}")
-                except Exception as e:
-                    failed.append(f"cogs.{name} - {e}")
-
         for what in os.listdir("listeners"):
             gud = True
             if what == "__pycache__":
@@ -563,6 +537,14 @@ class CogStuff(commands.Cog):
                         success.append(f"listeners.{name}")
                     except Exception as e:
                         failed.append(f"listeners.{name} - {e}")
+
+            if what == "!test":
+                # Test bot? Load testing
+                if self.bot.user.id == 1482861019582693507:
+                    gud = True
+                    print("Load test")
+                else:
+                    gud = False
 
             if gud:
                 for file in os.listdir(f"listeners/{what}"):
@@ -584,6 +566,14 @@ class CogStuff(commands.Cog):
             if who == "__pycache__":
                 gud = False
 
+            if what == "!test":
+                # Test bot? Load testing
+                if self.bot.user.id == 1482861019582693507:
+                    gud = True
+                    print("Load test")
+                else:
+                    gud = False
+                    
             if gud:
                 for sub in os.listdir(f"cogs/{who}"):
                     gud_test = True

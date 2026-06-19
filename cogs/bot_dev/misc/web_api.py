@@ -52,9 +52,10 @@ class ManagerCommands__Misc__Web(commands.Cog):
         if os.name.lower() == "nt":
             os.system("clear")
         elif os.name.lower() == "posix":
-            print("\033c")
-            print("clear")
-            os.system("clear")
+            pass
+            # print("\033c")
+            # print("clear")
+            # os.system("clear")
         else:
             os.system("cls")
         print(os.name)
@@ -96,9 +97,10 @@ class ManagerCommands__Misc__Web(commands.Cog):
         if os.name.lower() == "nt":
             os.system("clear")
         elif os.name.lower() == "posix":
-            print("\033c")
-            print("clear")
-            os.system("clear")
+            pass
+            # print("\033c")
+            # print("clear")
+            # os.system("clear")
         else:
             os.system("cls")
         print(os.name)

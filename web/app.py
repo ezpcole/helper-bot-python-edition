@@ -27,7 +27,8 @@ def create_app():
 
     # no loggie
     log = logging.getLogger('werkzeug')
-    log.setLevel(logging.ERROR)
+    log.setLevel(logging.WARNING)
+    log.propagate = False
 
     @app.after_request
     def add_header(response):
@@ -57,6 +58,11 @@ def create_app():
             json.dumps(misc_module.INFO, indent=4),
             mimetype="application/json"
         )
+    
+    @app.route("/profile_picture/.png")
+    @app.route("/cdn/img.png")
+    def png():
+        return send_from_directory("", "test.txt")
     
     # @app.errorhandler(404)
     # def notfound(error):

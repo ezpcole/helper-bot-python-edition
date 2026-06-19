@@ -23,6 +23,7 @@ from utils.custom.context import Context
 # from utils import permissions
 from utils.files import files
 from utils.semibot import SemiBot
+from utils.database import Database
 
 from discord.ext.commands import AutoShardedBot, DefaultHelpCommand
 
@@ -55,7 +56,11 @@ class Bot(AutoShardedBot):
             print("im dying")
 
             self.shutting_down = True
-
+            
+            Database.banished_conn.close()
+            Database.jobs_conn.close()
+            Database.userdata_conn.close()
+            
             await asyncio.sleep(0.1)
             # test_server = self.get_guild(1480087423433052242)
             # status_channel = test_server.get_channel(1482618083263643698)

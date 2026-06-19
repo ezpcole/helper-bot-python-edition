@@ -43,7 +43,7 @@ class AFKReturn(commands.Cog):
 
                         if toggle != 1:
                             afk_time = datetime.strptime(afk_user['since'], "%d/%m/%Y %H:%M")
-                            now_time = datetime.now()
+                            now_time = datetime.utcnow()
                             afk_dur = now_time - afk_time
                             
                             seconds = int(afk_dur.total_seconds())

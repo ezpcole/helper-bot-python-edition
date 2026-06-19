@@ -37,11 +37,12 @@ class RandomHugBoop(commands.Cog):
         await bot.wait_until_ready()
 
         while not bot.is_closed():
-            await asyncio.sleep(3600) # Final
+            await asyncio.sleep(7200) # Final
+            # await asyncio.sleep(3600) # Final
             # await asyncio.sleep(5) # Testing time
             
-            guild = bot.get_guild( config['test_server_id'] )
-            # guild = bot.get_guild( config['main_server_id'] )
+            # guild = bot.get_guild( config['test_server_id'] )
+            guild = bot.get_guild( config['main_server_id'] )
 
             members = []
 
@@ -59,13 +60,28 @@ class RandomHugBoop(commands.Cog):
 
                 members.append(member)
 
-            random_member = random.choice(members)
+            # 14/05/2026 (EU) snow2code: We should probably not have two latest messages be him hugging or booping
+            await self.send(members)
 
-            choice = random.choice(["hug", "boop"])
-            # general_chat_id = SemiFunc.get_channel_id(guild.id, "general-chat")
-            general_chat_id = 1501656987761643551
-            general_chat = guild.get_channel(general_chat_id)
-            await general_chat.send(f"{random_member.mention} ***{choice}***\n-# Opt out of this with ?pingoptout or /pingoptout in <#1477493580061741156>")
+    async def send(self, members: list[discord.Member]):
+        # 14/05/2026 (EU) snow2code: We should probably not have two latest messages be him hugging or booping
+        random_member = random.choice(members)
+        choice = random.choice(["hug", "boop"])
+
+        channel_id = 1414222708324958385
+        guild = self.bot.get_guild( files._bot_config()['main_server_id'] )
+
+        if self.bot.user.id == files._bot_config()['test_bot_id']:
+            guild = self.bot.get_guild(1480087423433052242)
+            channel_id = 1501656987761643551
+
+        channel = guild.get_channel(channel_id)
+
+        if channel.last_message == None:
+            await channel.send(f"{random_member.mention} ***{choice}***\n-# Opt out of this with ?pingoptout or /pingoptout in <#1477493580061741156>")
+        else:
+            if channel.last_message.author.id not in [files._bot_config()['main_bot_id'], files._bot_config()['test_bot_id']]:
+                await channel.send(f"{random_member.mention} ***{choice}***\n-# Opt out of this with ?pingoptout or /pingoptout in <#1477493580061741156>")
 
 async def setup(bot):
     await bot.add_cog(RandomHugBoop(bot))

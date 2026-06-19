@@ -15,6 +15,7 @@ import discord
 
 from datetime import datetime
 from discord.ext import commands
+from discord import app_commands
 from utils.discordbot import Bot
 from utils.custom.context import Context
 
@@ -28,6 +29,8 @@ class OnCommandError(commands.Cog):
         err_handled_already = False
 
         if not isinstance(ctx.channel, discord.DMChannel):
+            mention_snowy = "<@888072934114074624>"
+            
             if isinstance(error, commands.NoPrivateMessage):
                 err_handled_already = True
                 await ctx.reply("The commands are only usable in a server!")
@@ -37,7 +40,11 @@ class OnCommandError(commands.Cog):
             elif isinstance(error, commands.MissingRequiredArgument):
                 err_handled_already = True
                 await ctx.reply("You *might* be missing a argument for that command.. or something has gone terribly wrong.")
-
+            elif isinstance(error, app_commands.errors.CommandSignatureMismatch):
+                err_handled_already = True
+                await ctx.reply(f"Command signature mismatch. Please try refreshing your app..\nIf that doesn't work, let {mention_snowy} know.")
+                
+                
 
             if not os.path.exists("logs/errors"):
                 os.makedirs("logs/errors")
@@ -49,7 +56,6 @@ class OnCommandError(commands.Cog):
                 #     await ctx.message.delete()
                 #     return
                 
-                mention_snowy = "<@888072934114074624>"
                 command_name = ctx.command.name
                 date = datetime.now().strftime('%d-%m-%Y at %H-%M-%S')
 
