@@ -47,7 +47,7 @@ class qotd(commands.Cog):
         qotd_role = ctx.guild.get_role(1511978917890621531)
 
         # snowy: for testing
-        testing = True
+        testing = False
         channel = ctx.guild.get_channel(1414222708324958385)
         if testing:
             # Test
