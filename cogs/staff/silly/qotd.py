@@ -40,7 +40,8 @@ class qotd(commands.Cog):
         
         if not SemiFunc.can_use_command(ctx, ctx.author, "staff"):
             await ctx.reply("That command is staff only.")
-                return
+            return
+        
         qotd_channel = bot.get_channel(1517294723679650047)
         general_channel = bot.get_channel(1414222708324958385)
         qotd_role = bot.get_role(1511978917890621531)
