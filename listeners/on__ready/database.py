@@ -2,7 +2,7 @@
 #
 # File: listeners.on__ready.database
 # Date: 09/03/2026 (EU)
-# Date Edited: 03/05/2026 (EU)
+# Date Edited: 06/05/2026 (EU)
 # Purpose:
 #  
 # Author: snow2code
@@ -40,7 +40,7 @@ class OnReadyDatabase(commands.Cog):
                                 # Database.userdata_conn.commit()
             Database.userdata_conn.commit()
 
-        print("Added all users to database.")
+        # print("Added all users to database.")
         
 
 async def setup(bot):

@@ -18,6 +18,17 @@ def update(bot_instance: Bot):
 
 # Shorter stuff, then big stuff
 
+
+@api.route("/is_ip_banned", methods=["GET"])
+def is_ip_banned():
+    print(request.remote_addr)
+    return jsonify(True)
+
+@api.route("/getServers", methods=["GET"])
+def get_servers():
+    return jsonify([{"bots":1,"icon":"https://cdn.discordapp.com/embed/avatars/3.png","id":"1491122520173187214","members":3,"name":"Snowy Stuff (5)"}])
+
+
 @api.route("/botCredits", methods=["GET"])
 def botCredits():
     
@@ -38,7 +49,15 @@ def botStatus():
         status = status.json()
         status = status["status"]["description"]
     
-    return jsonify({"discord": {"status_provider": "discordstatus.com", "status": status}, "status": "online"})
+    return jsonify(
+        {
+            "discord": {
+                "status_provider": "discordstatus.com",
+                "status": status
+            },
+            "status": "online"
+        }
+    )
 
 
 @api.route("/getCommands", methods=['GET'])
@@ -133,50 +152,51 @@ def banishCheck():
 
 @api.route("/getUsers", methods=["GET"])
 def getUsers():
-    user_data = Database.userdata_conn.execute(f"SELECT * FROM user_data").fetchall()
-    users = []
-    nicks = []
+    return jsonify({})
+    # user_data = Database.userdata_conn.execute(f"SELECT * FROM user_data").fetchall()
+    # users = []
+    # nicks = []
 
-    for user in bot.get_all_members():
-        if user.bot == False:
-            can_add = True
-            for nick_entry in nicks:
-                if nick_entry['id'] == user.id:
-                    can_add = False
+    # for user in bot.get_all_members():
+    #     if user.bot == False:
+    #         can_add = True
+    #         for nick_entry in nicks:
+    #             if nick_entry['id'] == user.id:
+    #                 can_add = False
 
-            if can_add:
-                nicks.append({
-                    "id": user.id,
-                    "nick": user.nick
-                })
+    #         if can_add:
+    #             nicks.append({
+    #                 "id": user.id,
+    #                 "nick": user.nick
+    #             })
 
-    for user in user_data:
-        can_add = True
+    # for user in user_data:
+    #     can_add = True
 
-        for user_again in users:
-            if user_again['userid'] == user[1]:
-                can_add = False
+    #     for user_again in users:
+    #         if user_again['userid'] == user[1]:
+    #             can_add = False
 
-        if can_add:
-            job = user[3]
-            display_name = None
+    #     if can_add:
+    #         job = user[3]
+    #         display_name = None
 
-            if job == "NULL" or job == None:
-                job = "Unemployed"
+    #         if job == "NULL" or job == None:
+    #             job = "Unemployed"
 
-            for nick_entry in nicks:
-                if nick_entry['id'] == user[1]:
-                    display_name = nick_entry['nick']
-                    if display_name:
-                        display_name = str(display_name).replace("[AFK] ", "")
-                    break
+    #         for nick_entry in nicks:
+    #             if nick_entry['id'] == user[1]:
+    #                 display_name = nick_entry['nick']
+    #                 if display_name:
+    #                     display_name = str(display_name).replace("[AFK] ", "")
+    #                 break
                 
-            users.append({
-                "username": user[2],
-                "nick": display_name,
-                "userid": user[1],
-                "job": job,
-                "credits": user[4]
-            })
+    #         users.append({
+    #             "username": user[2],
+    #             "nick": display_name,
+    #             "userid": user[1],
+    #             "job": job,
+    #             "credits": user[4]
+    #         })
 
-    return jsonify(users)
+    # return jsonify(users)

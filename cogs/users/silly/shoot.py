@@ -12,6 +12,7 @@
 
 import discord
 
+from discord import app_commands
 from discord.ext import commands
 from utils.custom.context import Context
 from utils.discordbot import Bot
@@ -23,6 +24,8 @@ class UserCommands__Silly__Shoot(commands.Cog):
 
     @commands.guild_only()
     @commands.hybrid_command(name="shoot")
+    @app_commands.allowed_installs(guilds=True, users=False)
+    @app_commands.allowed_contexts(guilds=True, dms=False, private_channels=False)
     async def shoot(self, ctx: Context, user: discord.Member):
         """
         Shoot someone!

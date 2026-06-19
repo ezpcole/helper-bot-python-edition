@@ -41,12 +41,12 @@ class AFKMention(commands.Cog):
                         for afk_user in afk_data:
                             if mention.id == afk_user['user_id']:
                                 afk_time = datetime.strptime(afk_user['since'], "%d/%m/%Y %H:%M")
-                                now_time = datetime.now()
+                                now_time = datetime.utcnow()
                                 afk_dur = now_time - afk_time
                                 seconds = int(afk_dur.total_seconds())
                                 
                                 days = seconds // 86400
-                                hours = (seconds & 86400) // 3600
+                                hours = (seconds % 86400) // 3600
                                 minutes = (seconds % 3600) // 60
                                 # secondsB = seconds & 60
 

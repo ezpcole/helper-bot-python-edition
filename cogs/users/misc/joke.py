@@ -2,7 +2,7 @@
 #
 # File: cogs.users.misc.joke
 # Date: 30/04/2026 (EU)
-# Date Edited: 03/05/2026 (EU)
+# Date Edited: 06/05/2026 (EU)
 # Purpose: 
 #  
 # Author: chilly_dafur
@@ -11,8 +11,8 @@
 
 
 import discord
+from discord import app_commands
 from discord.ext import commands
-
 from utils.custom.context import Context
 from utils.discordbot import Bot
 from utils.semibot import SemiBot
@@ -26,6 +26,8 @@ class UserCommands__Misc__Joke(commands.Cog):
     
     # 30/04/2026 snow2code: maybe just in the server for now?
     @commands.guild_only()
+    @app_commands.allowed_installs(guilds=True, users=False)
+    @app_commands.allowed_contexts(guilds=True, dms=False, private_channels=False)
     async def joke(self, ctx: Context):
         """
         Tells a random joke!

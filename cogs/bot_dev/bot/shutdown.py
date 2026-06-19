@@ -2,7 +2,7 @@
 #
 # File: cogs.bot_dev.bot.shutdown
 # Date: 27/03/2026(?) (EU)
-# Date Edited: 03/05/2026 (EU)
+# Date Edited: 06/05/2026 (EU)
 # Purpose:
 #  
 # Author: snow2code
@@ -10,6 +10,7 @@
 ###############################################
 
 
+from discord import app_commands
 from discord.ext import commands
 from utils.custom.context import Context
 from utils.discordbot import Bot
@@ -21,6 +22,8 @@ class ManagerCommands__Bot__Shutdown(commands.Cog):
 
     @commands.guild_only()
     @commands.hybrid_command(name="shutdown")
+    @app_commands.allowed_installs(guilds=True, users=False)
+    @app_commands.allowed_contexts(guilds=True, dms=False, private_channels=False)
     async def shutdown(self, ctx: Context):
         """
         And now I'll wave, so long! -- Placeholder

@@ -2,7 +2,7 @@
 #
 # File: listeners.on__conect.create_databases
 # Date: 09/03/2026 (EU)
-# Date Edited: 03/05/2026 (EU)
+# Date Edited: 06/05/2026 (EU)
 # Purpose:
 #  
 # Author: snow2code
@@ -19,19 +19,22 @@ from utils.semifunc import SemiFunc
 class CreateDatabases(commands.Cog):
     def __init__(self, bot):
         self.bot: Bot = bot
+        self.called = False
 
     @commands.Cog.listener()
     async def on_connect(self):
-        Database.init()
-        
-        # Update the banished list
-        SemiFunc.update_banished(self.bot.logger)
+        if self.called == False:
+            self.called = True
+            Database.init()
+            
+            # Update the banished list
+            SemiFunc.update_banished(self.bot.logger)
 
-        # Update the AFK users list
-        SemiFunc.update_afk(self.bot.logger)
+            # Update the AFK users list
+            SemiFunc.update_afk(self.bot.logger)
 
-        # Update the job list
-        SemiFunc.update_jobs(self.bot.logger)
+            # Update the job list
+            SemiFunc.update_jobs(self.bot.logger)
         
 
 

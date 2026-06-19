@@ -2,7 +2,7 @@
 #
 # File: utils.discordbot
 # Date: 01/03/2026 (EU)
-# Date Edited: 03/05/2026 (EU)
+# Date Edited: 06/05/2026 (EU)
 # Purpose:
 #  
 # Author: snow2code
@@ -23,10 +23,12 @@ from utils.custom.context import Context
 # from utils import permissions
 from utils.files import files
 from utils.semibot import SemiBot
+from utils.database import Database
 
 from discord.ext.commands import AutoShardedBot, DefaultHelpCommand
 
 class Bot(AutoShardedBot):
+# class Bot(discord.ext.commands.Bot):
     def __init__(self, prefix: str = "!", *args, **kargs):
         super().__init__(*args, **kargs)
         
@@ -54,7 +56,11 @@ class Bot(AutoShardedBot):
             print("im dying")
 
             self.shutting_down = True
-
+            
+            Database.banished_conn.close()
+            Database.jobs_conn.close()
+            Database.userdata_conn.close()
+            
             await asyncio.sleep(0.1)
             # test_server = self.get_guild(1480087423433052242)
             # status_channel = test_server.get_channel(1482618083263643698)
@@ -144,6 +150,7 @@ class Bot(AutoShardedBot):
         ## Load listener cogs
         listeners = 0
         commands = 0
+
         for what in os.listdir("listeners"):
             gud = True
             if what == "__pycache__":
@@ -154,6 +161,14 @@ class Bot(AutoShardedBot):
                     listeners = listeners + 1
                     name = what[:-3]
                     await self.load_extension(f"listeners.{name}")
+
+            if what == "!test":
+                # Test bot? Load testing
+                if self.user.id == 1482861019582693507:
+                    gud = True
+                    print("Load test")
+                else:
+                    gud = False
 
             if gud:
                 for file in os.listdir(f"listeners/{what}"):
@@ -171,16 +186,25 @@ class Bot(AutoShardedBot):
             if who == "__pycache__":
                 gud = False
 
+            if what == "!test":
+                # Test bot? Load testing
+                if self.user.id == 1482861019582693507:
+                    gud = True
+                    print("Load test")
+                    continue
+                else:
+                    gud = False
+                    
             if gud:
                 for sub in os.listdir(f"cogs/{who}"):
                     gud_test = True
-                    if sub == "test":
-                        if self.user.id == 1482861019582693507:
-                            self.logger.info("Load test commands.")
-                            gud_test = True
-                        else:
-                            self.logger.info("Don't load test commands.")
-                            gud_test = False
+                    # if sub == "test":
+                    #     if self.user.id == 1482861019582693507:
+                    #         self.logger.info("Load test commands.")
+                    #         gud_test = True
+                    #     else:
+                    #         self.logger.info("Don't load test commands.")
+                    #         gud_test = False
 
                         
                     if gud_test == True:
