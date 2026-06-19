@@ -42,24 +42,23 @@ class qotd(commands.Cog):
             await ctx.reply("That command is staff only.")
             return
         
-        # should be self.bot, eza lmao
-        # i understand though, as you haven't done anything with discord.py
-
-        # ALSO, could be better with the channel id, and role id.. for now we're just testing, so it's fine for now.
-        qotd_channel = self.bot.get_channel(1517294723679650047)
-        general_channel = self.bot.get_channel(1414222708324958385)
-        qotd_role = self.bot.get_role(1511978917890621531)
+        await SemiFunc.log_command_use(self.bot, ctx.author, ctx.message.content, ctx.interaction, ctx)
+        
+        qotd_role = ctx.guild.get_role(1511978917890621531)
 
         # snowy: for testing
         testing = True
+        channel = ctx.guild.get_channel(1414222708324958385)
         if testing:
-            channel =
-            if qotd_channel:
-                # snowy: added comment for command to opt out instead.. as some don't have self roles visible
-                qotd_channel.send(f"{qotd_role.mention}\nA new Question of the Day has arrived: {qotd_msg}\nPut your answers in {general_channel.mention}\n-# opt out of this through self roles or with ?pingoptout qotd in bot commands...if you really want to")
+            # Test
+            channel = ctx.guild.get_channel(1517294723679650047)
         else:
+            # Gen
+            channel = ctx.guild.get_channel(1414222708324958385)
 
-        await SemiFunc.log_command_use(self.bot, ctx.author, ctx.message.content, ctx.interaction, ctx)
+        # snowy: added comment for command to opt out instead.. as some don't have self roles visible
+        channel.send(f"{qotd_role.mention}\nA new Question of the Day has arrived: {qotd_msg}\nPut your answers in {channel.mention}\n-# opt out of this through self roles or with ?pingoptout qotd in bot commands...if you really want to")
+
 
 async def setup(bot):
     await bot.add_cog(qotd(bot))
