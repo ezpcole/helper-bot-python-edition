@@ -18,8 +18,35 @@ from utils.discordbot import Bot
 from utils.semifunc import SemiFunc
 
 class qotd(commands.Cog):
-    
-    await SemiFunc.log_command_use(self.bot, ctx.author, ctx.message.content, ctx.interaction, ctx)
+    def __init__(self, bot):
+        self.bot: Bot = bot
+
+    @commands.guild_only()
+    @commands.hybrid_command(name="qotd")
+    async def qotd(self, ctx: Context, qotd_msg: str):
+        """
+        qotd
+        
+        Parameters
+        ----------
+        ctx: Context
+            The context of the command invocation
+        qotd_msg:
+            The question
+        """
+        if SemiFunc.command_disabled(ctx):
+            await ctx.reply("That command is currently disabled.")
+            return
+        
+        if not SemiFunc.can_use_command(ctx, ctx.author, "staff"):
+            await ctx.reply("That command is staff only.")
+                return
+        qotd_channel = bot.get_channel(1517294723679650047)
+        general_channel = bot.get_channel(1414222708324958385)
+        qotd_role = bot.get_role(1511978917890621531)
+        if qotd_channel:
+            qotd_channel.send(f"{qotd_role.mention}\nA new Question of the Day has arrived: {qotd_msg}\nPut your answers in {general_channel.mention}\n-# opt out of this through self roles...if you really want to")
+        await SemiFunc.log_command_use(self.bot, ctx.author, ctx.message.content, ctx.interaction, ctx)
 
 
 
