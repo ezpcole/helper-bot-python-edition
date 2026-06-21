@@ -23,6 +23,8 @@ class qotd(commands.Cog):
 
     @commands.guild_only()
     @commands.hybrid_command(name="qotd")
+    @app_commands.allowed_installs(guilds=True, users=False)
+    @app_commands.allowed_contexts(guilds=True, dms=False, private_channels=False)
     async def qotd(self, ctx: Context, qotd_msg: str):
         """
         qotd
